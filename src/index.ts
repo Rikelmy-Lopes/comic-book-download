@@ -1,9 +1,9 @@
-import { getComicTitle, getImgsLinks } from './images';
+import { getComicTitle, getImageLinks } from './utils/utils';
 import { generatePDF } from './pdf';
 
 const downloadComic = async (url: string) => {
   try {
-    const imgsLinks = await getImgsLinks(url);
+    const imgsLinks = await getImageLinks(url);
     const comicName = await getComicTitle(url);
     await generatePDF(imgsLinks, comicName);
   } catch (error) {
