@@ -1,7 +1,17 @@
 import { jsPDF } from 'jspdf';
 import sharp from 'sharp';
-import { getComicTitle, getImgStream, getImgsLinks } from './images.js';
-import { mkdirSync } from 'fs';
+import { getComicTitle, getImgStream, getImgsLinks } from './images';
+import { mkdirSync, existsSync  } from 'fs';
+import { join } from 'path';
+
+const handleDirectory = (): void => {
+  const path = join(__dirname, '../pdf');
+  if(existsSync(path)) {
+    return;
+  } else {
+    mkdirSync(path);
+  }
+};
 
 
 async function getImgMetadata(imageBuffer: ArrayBuffer) {
@@ -30,8 +40,8 @@ const generatePDF = async (imgLinks: string[], comicName: string): Promise<void>
     }
     doc.addImage(imgBuffer, 0, 0, width, height);
   }
-  mkdirSync('../pdf');
-  doc.save(`../pdf/${comicName}.pdf`);
+  handleDirectory();
+  doc.save(join(__dirname, `../pdf/${comicName}.pdf`));
   console.log('PDF Generated!!!');
 };
 
