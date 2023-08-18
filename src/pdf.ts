@@ -24,8 +24,8 @@ async function getImgMetadata(imageBuffer: ArrayBuffer) {
 
 
 const generatePDF = async (imgLinks: string[], comicName: string): Promise<void> => {
-  const doc = new jsPDF();
-  doc.deletePage(1);
+  const pdf = new jsPDF();
+  pdf.deletePage(1);
 
   for (let i = 0; i < imgLinks.length; i += 1) {
     const imgStream = await getImgStream(imgLinks[i]);
@@ -34,14 +34,14 @@ const generatePDF = async (imgLinks: string[], comicName: string): Promise<void>
     const aspectRatio = width / height;
 
     if (aspectRatio < 1) {
-      doc.addPage([width, height], 'portrait');
+      pdf.addPage([width, height], 'portrait');
     } else {
-      doc.addPage([width, height], 'landscape');
+      pdf.addPage([width, height], 'landscape');
     }
-    doc.addImage(imgBuffer, 0, 0, width, height);
+    pdf.addImage(imgBuffer, 0, 0, width, height);
   }
   handleDirectory();
-  doc.save(join(__dirname, `../pdf/${comicName}.pdf`));
+  pdf.save(join(__dirname, `../pdf/${comicName}.pdf`));
   console.log('PDF Generated!!!');
 };
 
