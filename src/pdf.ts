@@ -1,14 +1,13 @@
 import { jsPDF } from 'jspdf';
 import sharp from 'sharp';
-import { getComicTitle, getImgStream, getImgsLinks } from './images';
+import { fetchImage } from './images';
 import { mkdirSync, existsSync  } from 'fs';
 import { join } from 'path';
+const OUTPUT_PDF = '../pdf';
 
 const handleDirectory = (): void => {
-  const path = join(__dirname, '../pdf');
-  if(existsSync(path)) {
-    return;
-  } else {
+  const path = join(__dirname, OUTPUT_PDF);
+  if (!existsSync(path)) {
     mkdirSync(path);
   }
 };
@@ -27,8 +26,8 @@ const generatePDF = async (imgLinks: string[], comicName: string): Promise<void>
   const pdf = new jsPDF();
   pdf.deletePage(1);
 
-  for (let i = 0; i < imgLinks.length; i += 1) {
-    const imgStream = await getImgStream(imgLinks[i]);
+  for (let i = 0; i <= imgLinks.length; i += 1) {
+    const imgStream = await fetchImage(imgLinks[i]);
     const { width, height } = await getImgMetadata(imgStream);
     const imgBuffer = `data:image/jpeg;base64,${Buffer.from(imgStream).toString('base64')}`;
     const aspectRatio = width / height;
@@ -41,16 +40,12 @@ const generatePDF = async (imgLinks: string[], comicName: string): Promise<void>
     pdf.addImage(imgBuffer, 0, 0, width, height);
   }
   handleDirectory();
-  pdf.save(join(__dirname, `../pdf/${comicName}.pdf`));
+  pdf.save(join(__dirname, `${OUTPUT_PDF}/${comicName}.pdf`));
   console.log('PDF Generated!!!');
 };
 
-const main = async (url: string) => {
-  const imgsLinks = await getImgsLinks(url);
-  const comicName = await getComicTitle(url);
-  generatePDF(imgsLinks, comicName);
-};
+
 
 export {
-  main
+  generatePDF
 };

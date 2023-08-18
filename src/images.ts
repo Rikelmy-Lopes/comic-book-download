@@ -1,7 +1,7 @@
 import axios, { AxiosError } from 'axios';
 import { CheerioAPI, load } from 'cheerio';
 
-async function getHtml(url: string): Promise<CheerioAPI> {
+async function fetchHtml(url: string): Promise<CheerioAPI> {
   try {
     const { data } = await axios.get(url);
     const html = load(data);
@@ -11,13 +11,9 @@ async function getHtml(url: string): Promise<CheerioAPI> {
   }
 }
 
-async function getImgStream(imgUrl: string): Promise<ArrayBuffer> {
+async function fetchImage(imgUrl: string): Promise<ArrayBuffer> {
   try {
-    const { data } = await axios<ArrayBuffer>({
-      url: imgUrl,
-      method: 'GET',
-      responseType: 'arraybuffer',
-    });
+    const { data } = await axios.get<ArrayBuffer>(imgUrl, { responseType: 'arraybuffer'});
     return data;
   } catch (error) {
     throw new Error(`Failed to download image from "${imgUrl}": ${(error as AxiosError).message}`);
@@ -25,12 +21,12 @@ async function getImgStream(imgUrl: string): Promise<ArrayBuffer> {
 }
 
 const getComicTitle = async (url: string): Promise<string> => {
-  const html = await getHtml(url);
+  const html = await fetchHtml(url);
   return html('div.title').children('h1').text();
 };
 
 async function getImgsLinks(url: string): Promise<string[]> {
-  const html = await getHtml(url);
+  const html = await fetchHtml(url);
   const imagesLinks = html('.chapter_img').map((_, element) => {
     return element.attribs.src;
   }).toArray();
@@ -38,7 +34,7 @@ async function getImgsLinks(url: string): Promise<string[]> {
 }
 
 export { 
-  getImgStream,
+  fetchImage,
   getImgsLinks,
   getComicTitle
 };
