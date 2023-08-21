@@ -32,7 +32,6 @@ const generatePDF = async (imgLinks: string[], comicName: string): Promise<void>
   }
   createPdfFolder();
   pdf.save(join(__dirname, `${OUTPUT_PDF}/${comicName}.pdf`));
-  console.log('PDF Generated!!!');
 };
 
 
