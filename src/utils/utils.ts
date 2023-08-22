@@ -25,6 +25,11 @@ const getImageLinks = async (url: string): Promise<string[]> => {
   const imagesLinks = parsedHtml('.chapter_img').map((_, element) => {
     return element.attribs.src;
   }).toArray();
+
+  if (imagesLinks.length === 0) {
+    throw new Error('No images were found on the website.');
+  }
+  
   return imagesLinks;
 };
 

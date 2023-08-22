@@ -10,9 +10,6 @@ const downloadComic = async (): Promise<void> => {
   try {
     const url = getUrlFromArgs();
     const imgsLinks = await getImageLinks(url);
-    if (imgsLinks.length === 0) {
-      throw new Error('No images were found on the website.');
-    }
     const comicName = await getComicTitle(url);
     await generatePDF(imgsLinks, comicName);
     console.log('\n');
