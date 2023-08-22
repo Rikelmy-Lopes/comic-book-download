@@ -27,18 +27,17 @@ const generatePDF = async (imgLinks: string[], comicName: string): Promise<void>
   progressBar.start(imgLinks.length, 0);
 
   for (let i = 0; i < imgLinks.length; i += 1) {
-    const imgStream = await fetchImage(imgLinks[i]);
-    const { width, height } = await getImageMetadata(imgStream);
-    const imgBuffer = `data:image/jpeg;base64,${Buffer.from(imgStream).toString('base64')}`;
+    const imgArrayBuffer = await fetchImage(imgLinks[i]);
+    const { width, height, format } = await getImageMetadata(imgArrayBuffer);
+    const imgBase64 = `data:image/${format};base64,${Buffer.from(imgArrayBuffer).toString('base64')}`;
     const aspectRatio = width / height;
-
     if (aspectRatio < 1) {
       pdf.addPage([width, height], 'portrait');
     } else {
       pdf.addPage([width, height], 'landscape');
     }
-    pdf.addImage(imgBuffer, 0, 0, width, height);
-    progressBar.update(i + 1);
+    pdf.addImage(imgBase64, 0, 0, width, height);
+    progressBar.increment();
   }
   createPdfFolder();
   pdf.save(join(__dirname, `${OUTPUT_PDF}/${comicName}.pdf`));

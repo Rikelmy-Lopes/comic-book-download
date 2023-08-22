@@ -13,8 +13,8 @@ const getComicTitle = async (url: string): Promise<string> => {
   const parsedHtml = parseHtml(html);
   let title = parsedHtml('div.title').children('h1').text();
   if (!title) {
-    console.log(WARNING_STYLE('Comic name not found. Using the default name "comic." \n'));
-    title = 'comic';
+    console.log(WARNING_STYLE('Comic name not found. Using the default name "Comic" \n'));
+    title = 'Comic';
   }
   return title;
 };
@@ -29,10 +29,11 @@ const getImageLinks = async (url: string): Promise<string[]> => {
 };
 
 async function getImageMetadata(imageBuffer: ArrayBuffer) {
-  const { width, height } = await sharp(imageBuffer).metadata();
+  const { width, height, format } = await sharp(imageBuffer).metadata();
   return { 
     width: width || 0,
     height: height || 0,
+    format: format || 'png'
   };
 }
 
