@@ -36,9 +36,32 @@ async function getImageMetadata(imageBuffer: ArrayBuffer) {
   };
 }
 
+function isUrlValid(url: string) {
+  try {
+    new URL(url);
+    return true;
+  } catch (err) {
+    return false;
+  }
+}
+
+function getUrlFromArgs() {
+  const url = process.argv[2];
+  
+  if (!url) {
+    throw new Error('Link not provided in the arguments.');
+  }
+  if (!isUrlValid(url)) {
+    throw new Error('Invalid link provided.');
+  }
+  
+  return url;
+}
+
 export {
   parseHtml,
   getComicTitle,
   getImageLinks,
-  getImageMetadata
+  getImageMetadata,
+  getUrlFromArgs
 };
