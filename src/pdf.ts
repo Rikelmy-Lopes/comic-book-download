@@ -7,7 +7,7 @@ import CLIProgress from 'cli-progress';
 const OUTPUT_PDF = '../pdf';
 
 const progressBar = new CLIProgress.SingleBar({
-  format: 'Progress |{bar}| {percentage}% | ETA: {eta_formatted} | {value}/{total}',
+  format: 'Progress |{bar}| {percentage}% | ETA: {eta_formatted} | {value}/{total} \n',
   barCompleteChar: '\u2588',
   barIncompleteChar: '\u2591',
   hideCursor: true,
