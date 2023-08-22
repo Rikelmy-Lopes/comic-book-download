@@ -5,7 +5,7 @@ const SUCCESS_STYLE = chalk.white.bgGreen.bold;
 const WARNING_STYLE = chalk.white.bgYellow.bold;
 const ERROR_STYLE = chalk.white.bgRed.bold;
 
-const downloadComic = async (): Promise<void> => {
+const main = async (): Promise<void> => {
   try {
     const url = getUrlFromArgs();
     console.log(WARNING_STYLE('Generating PDF... \n'));
@@ -19,8 +19,6 @@ const downloadComic = async (): Promise<void> => {
   }
 };
 
-downloadComic();
+main();
 
-export {
-  downloadComic
-};
+export default main;
