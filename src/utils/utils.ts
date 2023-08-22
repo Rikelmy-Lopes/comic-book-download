@@ -33,25 +33,25 @@ const getImageLinks = async (url: string): Promise<string[]> => {
   return imagesLinks;
 };
 
-async function getImageMetadata(imageBuffer: ArrayBuffer) {
+const getImageMetadata = async (imageBuffer: ArrayBuffer) => {
   const { width, height, format } = await sharp(imageBuffer).metadata();
   return { 
     width: width || 0,
     height: height || 0,
     format: format || 'png'
   };
-}
+};
 
-function isUrlValid(url: string): boolean {
+const isUrlValid = (url: string): boolean => {
   try {
     new URL(url);
     return true;
   } catch (err) {
     return false;
   }
-}
+};
 
-function getUrlFromArgs(): string {
+const getUrlFromArgs = (): string => {
   const url = process.argv[2];
   
   if (!url) {
@@ -62,7 +62,7 @@ function getUrlFromArgs(): string {
   }
   
   return url;
-}
+};
 
 export {
   parseHtml,
