@@ -42,7 +42,7 @@ async function getImageMetadata(imageBuffer: ArrayBuffer) {
   };
 }
 
-function isUrlValid(url: string) {
+function isUrlValid(url: string): boolean {
   try {
     new URL(url);
     return true;
@@ -51,7 +51,7 @@ function isUrlValid(url: string) {
   }
 }
 
-function getUrlFromArgs() {
+function getUrlFromArgs(): string {
   const url = process.argv[2];
   
   if (!url) {

@@ -6,9 +6,9 @@ const WARNING_STYLE = chalk.white.bgYellow.bold;
 const ERROR_STYLE = chalk.white.bgRed.bold;
 
 const downloadComic = async (): Promise<void> => {
-  console.log(WARNING_STYLE('Generating PDF... \n'));
   try {
     const url = getUrlFromArgs();
+    console.log(WARNING_STYLE('Generating PDF... \n'));
     const imgsLinks = await getImageLinks(url);
     const comicName = await getComicTitle(url);
     await generatePDF(imgsLinks, comicName);
