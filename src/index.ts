@@ -15,7 +15,7 @@ const downloadComic = async (): Promise<void> => {
     console.log('\n');
     console.log(SUCCESS_STYLE('PDF Generated!!!'));
   } catch (error) {
-    console.log(ERROR_STYLE(`An error occurred: ${(error as Error).message} \n`));
+    console.log(ERROR_STYLE(`\n An error occurred: ${(error as Error).message} \n`));
   }
 };
 
