@@ -6,14 +6,15 @@ const WARNING_STYLE = chalk.white.bgYellow.bold;
 const ERROR_STYLE = chalk.white.bgRed.bold;
 
 const downloadComic = async (url: string): Promise<void> => {
-  console.log(WARNING_STYLE('Generating PDF...'));
+  console.log(WARNING_STYLE('Generating PDF... \n'));
   try {
     const imgsLinks = await getImageLinks(url);
     const comicName = await getComicTitle(url);
     await generatePDF(imgsLinks, comicName);
+    console.log('\n');
     console.log(SUCCESS_STYLE('PDF Generated!!!'));
   } catch (error) {
-    console.log(ERROR_STYLE(`An error occurred: ${(error as Error).message}`));
+    console.log(ERROR_STYLE(`An error occurred: ${(error as Error).message} \n`));
   }
 };
 
