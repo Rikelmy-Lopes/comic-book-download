@@ -14,10 +14,12 @@
     "axios": "^1.4.0",
     "chalk": "^4.1.2",
     "cheerio": "^1.0.0-rc.12",
+    "cli-progress": "^3.12.0",
     "jspdf": "^2.5.1",
     "sharp": "^0.32.5"
   },
   "devDependencies": {
+    "@types/cli-progress": "^3.11.0",
     "@types/node": "^20.5.0",
     "@typescript-eslint/eslint-plugin": "^6.4.0",
     "@typescript-eslint/parser": "^6.4.0",

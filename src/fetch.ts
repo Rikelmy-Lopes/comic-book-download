@@ -5,7 +5,7 @@ async function fetchHtml(url: string): Promise<string> {
     const { data } = await axios.get<string>(url);
     return data;
   } catch (error) {
-    throw new Error(`Failed to retrieve HTML from "${url}": ${(error as Error).message}`);
+    throw new Error(`Failed to retrieve HTML from "${url}": ${(error as AxiosError).message}`);
   }
 }
   
