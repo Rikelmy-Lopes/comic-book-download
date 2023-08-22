@@ -43,12 +43,9 @@ const getImageMetadata = async (imageBuffer: ArrayBuffer) => {
 };
 
 const isUrlValid = (url: string): boolean => {
-  try {
-    new URL(url);
-    return true;
-  } catch (err) {
-    return false;
-  }
+  const urlPattern = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;
+
+  return urlPattern.test(url);
 };
 
 const getUrlFromArgs = (): string => {
