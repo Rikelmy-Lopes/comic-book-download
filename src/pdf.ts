@@ -26,8 +26,8 @@ const generatePDF = async (imgLinks: string[], comicName: string): Promise<void>
   pdf.deletePage(1);
   progressBar.start(imgLinks.length, 0);
 
-  for (let i = 0; i < imgLinks.length; i += 1) {
-    const imgArrayBuffer = await fetchImage(imgLinks[i]);
+  for (const imgLink of imgLinks) {
+    const imgArrayBuffer = await fetchImage(imgLink);
     const { width, height, format } = await getImageMetadata(imgArrayBuffer);
     const imgBase64 = `data:image/${format};base64,${Buffer.from(imgArrayBuffer).toString('base64')}`;
     const aspectRatio = width / height;
