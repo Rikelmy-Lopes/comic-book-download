@@ -31,11 +31,8 @@ const generatePDF = async (imgLinks: string[], comicName: string): Promise<void>
     const { width, height, format } = await getImageMetadata(imgArrayBuffer);
     const imgBase64 = `data:image/${format};base64,${Buffer.from(imgArrayBuffer).toString('base64')}`;
     const aspectRatio = width / height;
-    if (aspectRatio < 1) {
-      pdf.addPage([width, height], 'portrait');
-    } else {
-      pdf.addPage([width, height], 'landscape');
-    }
+    const pageFormat = aspectRatio < 1 ? 'portrait' : 'landscape';
+    pdf.addPage([width, height], pageFormat);
     pdf.addImage(imgBase64, 0, 0, width, height);
     progressBar.increment();
   }
